@@ -94,6 +94,15 @@ def main():
     # -------------------------------
     print("Training CI-VAE model on MNIST...")
     trainer.train(epochs=1000, learning_rate=1e-5)
+
+    # Save trained model for later inference
+    checkpoint = {
+        "input_size": input_size,
+        "n_classes": n_classes,
+        "latent_size": latent_size,
+        "state_dict": model.state_dict(),
+    }
+    torch.save(checkpoint, os.path.join(OUTPUT_DIR, "ci_vae_mnist.pt"))
     
     plot_residuals(
         trainer.train_tracker,
